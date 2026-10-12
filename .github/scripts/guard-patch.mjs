@@ -16,7 +16,10 @@ const FORBIDDEN_HEADERS = [
   /^dissimilarity /, /^Binary files/, /^GIT binary patch/,
 ];
 const FORBIDDEN_ADDED = [
-  [/\.(skip|only|todo)\b/, 'adds .skip/.only/.todo'],
+  // Vitest modifiers chained directly on it/test/describe: it.skip, it.each([...]).only, test.each(..)(..).todo.
+  // A bare `.todo` must not match on its own: `database.todo` is the Prisma delegate used by repository tests.
+  [/\b(it|test|describe|suite)((\.\w+)|(\([^()]*\)))*\.(skip|only|todo|skipIf)\b/, 'adds skip/only/todo to a test'],
+  [/\b(xit|xtest|xdescribe|fit|fdescribe)\(/, 'adds a disabled or focused test'],
   [/@ts-(ignore|nocheck)/, 'adds @ts-ignore/@ts-nocheck'],
   [/eslint-disable/, 'adds eslint-disable'],
   [/child_process|\bexecSync\b|\bspawnSync?\b/, 'uses child_process'],
