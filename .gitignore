@@ -21,3 +21,6 @@ coverage/
 
 # macOS
 .DS_Store
+
+# PR test agent scratch output (never committed)
+.agent/
