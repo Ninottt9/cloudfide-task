@@ -115,7 +115,7 @@ jobs:
             --agent pr-test-agent
             --model ${{ env.AGENT_MODEL }}
             --max-turns 30
-            --allowedTools "Read,Glob,Grep,Edit,Write,Bash(git diff:*),Bash(git status:*),Bash(git ls-files:*),Bash(npm --prefix backend test:*),Bash(npm --prefix backend run test:*),Bash(npm --prefix backend run typecheck),Bash(npm --prefix frontend test:*),Bash(npm --prefix frontend run test:*),Bash(npm --prefix frontend run typecheck)"
+            --allowedTools "Read,Glob,Grep,Edit,Write,Bash(git diff:*),Bash(git status:*),Bash(git ls-files:*),Bash(npm --prefix backend test:*),Bash(npm --prefix backend run test:coverage),Bash(npm --prefix backend run test:coverage *),Bash(npm --prefix backend run typecheck),Bash(npm --prefix frontend test:*),Bash(npm --prefix frontend run test:coverage),Bash(npm --prefix frontend run test:coverage *),Bash(npm --prefix frontend run typecheck)"
             --disallowedTools "WebFetch,WebSearch,Edit(.github/**),Edit(.claude/**),Edit(.env*),Edit(**/.env*),Edit(**/package.json),Edit(**/package-lock.json),Edit(**/vitest.config.ts),Edit(**/vite.config.ts),Edit(**/tsconfig*.json),Edit(backend/src/**),Edit(backend/prisma/**),Read(.env*),Read(**/.env*)"
 
       # Whatever the agent did, reduce it to one patch for the privileged job to judge.
