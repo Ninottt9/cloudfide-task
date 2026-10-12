@@ -53,6 +53,7 @@ export function TodosPage() {
           disabled={todosQuery.isPending || busy}
           onCreate={() => setEditor('new')}
         />
+        <TodoSummary todos={todos} />
         <TodoFilters
           filter={filters.filter}
           search={filters.search}
