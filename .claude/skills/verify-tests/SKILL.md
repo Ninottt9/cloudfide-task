@@ -5,7 +5,7 @@ description: Run the Taskly backend and frontend test suites and coverage with t
 
 # Verify tests
 
-Run only these commands (anything else is not permitted in this environment). Dependencies are already installed; do not run `npm install`.
+Run only these commands (anything else is not permitted in this environment). Dependencies are already installed; do not run `npm install`. Never use `npx`, `npm exec` or `vitest` directly: they are not permitted and will be refused. If an allowed command is refused, do not try variations: say so in the report.
 
 | Purpose | Command |
 |---|---|

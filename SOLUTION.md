@@ -64,6 +64,8 @@ Example PR: [#1 "feat: add task summary endpoint and summary bar"](https://githu
 
 The guard accepted 4 files (+88/-1 lines) and the workflow committed them to the branch as `test: add and update unit tests (PR test agent)`.
 
+**Second run on the same PR** ([run](https://github.com/Ninottt9/cloudfide-task/actions/runs/38326046354)): after the follow-up commit that wired `TodoSummary` into the page, the workflow ran again. The agent decided **no test changes were needed**: every changed behaviour already had tests (`summary.test.ts`, the route test in `router.test.ts`, `todos.test.ts`, `TodoSummary.test.tsx`), and `TodosPage` only mounts the component. The workflow's own re-run confirmed 56/56 backend and 23/23 frontend tests with unchanged coverage, and nothing was committed. This shows the agent is idempotent and does not pad tests on a re-run. The agent also reported honestly that it could not run the suites itself (it tried `npx vitest`, which is not allowlisted) and named the independent run as the authority; the skill now forbids `npx`.
+
 **What went wrong first, and what it taught**
 - The first run was **correctly blocked by my own guard**, which wrongly flagged the Prisma property `database.todo` as a skipped test (`.todo`). The check went red as designed; the regex was narrowed to Vitest modifiers chained on `it/test/describe`. The independent layer caught a defect in the independent layer's own rule.
 - In the run above the agent could not run `test:coverage` because the tool allowlist pattern did not match it. It said so in its report instead of inventing numbers; the workflow's own verification supplied the figures. The allowlist was then corrected.
