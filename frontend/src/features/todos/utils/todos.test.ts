@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { selectTodos } from './todos'
+import { selectTodos, summarizeTodos } from './todos'
 import type { Todo } from '../types'
 
 const base: Todo = {
@@ -29,5 +29,21 @@ describe('selectTodos', () => {
     const todos = [base, high]
     expect(selectTodos(todos, 'all', '', 'priority')).toEqual([high, base])
     expect(todos).toEqual([base, high])
+  })
+})
+
+describe('summarizeTodos', () => {
+  it('counts active, completed and overdue tasks', () => {
+    const todos = [
+      { ...base, id: 1 },
+      { ...base, id: 2, due_date: '2000-01-01' },
+      { ...base, id: 3, completed: true, due_date: '2000-01-01' },
+      { ...base, id: 4, due_date: '2999-01-01' },
+    ]
+    expect(summarizeTodos(todos)).toEqual({ active: 3, completed: 1, overdue: 1 })
+  })
+
+  it('returns zeros for an empty list', () => {
+    expect(summarizeTodos([])).toEqual({ active: 0, completed: 0, overdue: 0 })
   })
 })

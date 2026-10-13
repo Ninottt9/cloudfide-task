@@ -78,6 +78,22 @@
         }
       }
     },
+    "/api/todos/summary": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoSummary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/todos/{id}": {
       "parameters": [
         {
@@ -279,6 +295,49 @@
           "updated_at": {
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+      "TodoSummary": {
+        "type": "object",
+        "required": [
+          "total",
+          "active",
+          "completed",
+          "overdue",
+          "active_by_priority"
+        ],
+        "properties": {
+          "total": {
+            "type": "integer"
+          },
+          "active": {
+            "type": "integer"
+          },
+          "completed": {
+            "type": "integer"
+          },
+          "overdue": {
+            "type": "integer"
+          },
+          "active_by_priority": {
+            "type": "object",
+            "required": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "properties": {
+              "low": {
+                "type": "integer"
+              },
+              "medium": {
+                "type": "integer"
+              },
+              "high": {
+                "type": "integer"
+              }
+            }
           }
         }
       }

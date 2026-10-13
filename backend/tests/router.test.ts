@@ -18,6 +18,20 @@ it('lists tasks from the repository', async () => {
   expect(response.body).toEqual([todo]);
   expect(repository.list).toHaveBeenCalledOnce();
 });
+it('serves the summary ahead of the :id route', async () => {
+  const { app, repository } = setup();
+  vi.useFakeTimers({ toFake: ['Date'] });
+  vi.setSystemTime(new Date('2026-10-16T10:00:00Z'));
+  try {
+    const response = await request(app).get('/api/todos/summary');
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ total: 1, active: 1, completed: 0, overdue: 1, active_by_priority: { low: 0, medium: 0, high: 1 } });
+    expect(repository.list).toHaveBeenCalledOnce();
+    expect(repository.get).not.toHaveBeenCalled();
+  } finally {
+    vi.useRealTimers();
+  }
+});
 it('creates tasks with trimmed input and defaults', async () => {
   const { app, repository } = setup();
   const response = await request(app).post('/api/todos').send({ title: '  Plan the sprint  ', priority: 'high' });

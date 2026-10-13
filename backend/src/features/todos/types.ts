@@ -14,3 +14,10 @@ export interface TodoStore {
   update(id: number, payload: TodoUpdate): Promise<Todo | null>;
   delete(id: number): Promise<boolean>;
 }
+export interface TodoSummary {
+  total: number;
+  active: number;
+  completed: number;
+  overdue: number;
+  active_by_priority: Record<Todo['priority'], number>;
+}
